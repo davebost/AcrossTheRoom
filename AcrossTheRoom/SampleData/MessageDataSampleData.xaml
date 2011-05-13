@@ -1,0 +1,49 @@
+<AcrossTheRoom_Models:MessageData xmlns:AcrossTheRoom_Models="clr-namespace:AcrossTheRoom.Models">
+	<AcrossTheRoom_Models:MessageData.Instance>
+		<AcrossTheRoom_Models:MessageData>
+			<AcrossTheRoom_Models:MessageData.Instance>
+				<AcrossTheRoom_Models:MessageData>
+					<AcrossTheRoom_Models:MessageData.Instance>
+						<AcrossTheRoom_Models:MessageData/>
+					</AcrossTheRoom_Models:MessageData.Instance>
+					<AcrossTheRoom_Models:MessageData.Messages>
+						<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FFC10B0C" FontSize="10" ForegroundColor="#FF1B7324" Speed="38" Text="Nam class"/>
+						<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FFC56169" FontSize="68" ForegroundColor="#FF0040DD" Speed="11" Text="Maecenas sed curae"/>
+						<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF124ABE" FontSize="43" ForegroundColor="#FFB8241E" Speed="72" Text="Praesent donec etiam fusce"/>
+						<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FFF66420" FontSize="40" ForegroundColor="#FFEC8EC4" Speed="37" Text="Curabitur cras"/>
+						<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FFD71813" FontSize="39" ForegroundColor="#FFDBAF7C" Speed="83" Text="Phasellus dis lorem"/>
+						<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF482905" FontSize="29" ForegroundColor="#FF3CA99F" Speed="78" Text="Est hac aenean leo"/>
+						<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FFCE8937" FontSize="15" ForegroundColor="#FF650479" Speed="35" Text="Mauris consequat mus"/>
+						<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FFD0F47F" FontSize="16" ForegroundColor="#FF8AC5AE" Speed="14" Text="Nec vestibulum nullam"/>
+						<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FF7192D7" FontSize="45" ForegroundColor="#FF937F20" Speed="14" Text="Aliquam integer non"/>
+						<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FF06134B" FontSize="49" ForegroundColor="#FFFD72C6" Speed="81" Text="Accumsan aptent quisque convallis vivamus"/>
+					</AcrossTheRoom_Models:MessageData.Messages>
+				</AcrossTheRoom_Models:MessageData>
+			</AcrossTheRoom_Models:MessageData.Instance>
+			<AcrossTheRoom_Models:MessageData.Messages>
+				<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FFA72F8E" FontSize="20" ForegroundColor="#FFB5F5CE" Speed="19" Text="Adipiscing morbi"/>
+				<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FFF0F61C" FontSize="99" ForegroundColor="#FF3CE199" Speed="49" Text="Per parturient auctor aliquam dignissim"/>
+				<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FFFE0FEC" FontSize="61" ForegroundColor="#FFCCD217" Speed="57" Text="Vestibulum sed"/>
+				<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF455004" FontSize="15" ForegroundColor="#FF5EBFE1" Speed="69" Text="Vestibulum adipiscing congue"/>
+				<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FF025B59" FontSize="44" ForegroundColor="#FF57ED50" Speed="66" Text="Duis nulla"/>
+				<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF01A2ED" FontSize="83" ForegroundColor="#FFEA8E7E" Speed="60" Text="Elementum facilisis"/>
+				<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FF4423E1" FontSize="95" ForegroundColor="#FFECC961" Speed="39" Text="Parturient proin nunc"/>
+				<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FF71E57F" FontSize="11" ForegroundColor="#FF094349" Speed="99" Text="Bibendum cursus"/>
+				<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FF02674E" FontSize="52" ForegroundColor="#FFD4514B" Speed="58" Text="Vestibulum fermentum vestibulum"/>
+				<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FF31A483" FontSize="83" ForegroundColor="#FF116CC2" Speed="90" Text="Augue amet dictum fringilla dictumst"/>
+			</AcrossTheRoom_Models:MessageData.Messages>
+		</AcrossTheRoom_Models:MessageData>
+	</AcrossTheRoom_Models:MessageData.Instance>
+	<AcrossTheRoom_Models:MessageData.Messages>
+		<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF7D7F1E" FontSize="12" ForegroundColor="#FFAD1B54" Speed="90" Text="Eleifend adipiscing"/>
+		<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF838109" FontSize="98" ForegroundColor="#FFA9BEEF" Speed="43" Text="Facilisi parturient"/>
+		<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FF180A6A" FontSize="28" ForegroundColor="#FF5D60C5" Speed="43" Text="Faucibus habitasse habitant dolor sem"/>
+		<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FF610265" FontSize="82" ForegroundColor="#FF02AD84" Speed="81" Text="Aliquet hendrerit ante"/>
+		<AcrossTheRoom_Models:Message AnimationType="Flash" BackgroundColor="#FF27CBF8" FontSize="96" ForegroundColor="#FFF6D1D6" Speed="43" Text="Blandit himenaeos arcu sit"/>
+		<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FFBE723C" FontSize="24" ForegroundColor="#FFBF3999" Speed="74" Text="Commodo diam eget inceptos"/>
+		<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF9F86A8" FontSize="47" ForegroundColor="#FF597D0B" Speed="89" Text="Fames interdum"/>
+		<AcrossTheRoom_Models:Message AnimationType="None" BackgroundColor="#FF35A8F3" FontSize="85" ForegroundColor="#FFC1A1B8" Speed="90" Text="Vel lectus nam elit"/>
+		<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FFB8CEE3" FontSize="39" ForegroundColor="#FF27F0E6" Speed="28" Text="Sed libero dis"/>
+		<AcrossTheRoom_Models:Message AnimationType="Scrolling" BackgroundColor="#FF50B316" FontSize="50" ForegroundColor="#FF62865B" Speed="86" Text="Lobortis felis est vestibulum"/>
+	</AcrossTheRoom_Models:MessageData.Messages>
+</AcrossTheRoom_Models:MessageData>

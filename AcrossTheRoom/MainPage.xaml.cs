@@ -36,14 +36,39 @@ namespace AcrossTheRoom
             MessageListBox.ItemsSource = _md.Messages;
         }
 
-        private void MenuItem_Edit(object sender, RoutedEventArgs e)
+        private void MessageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            string messageKey = ((Message)MessageListBox.SelectedItem).id.ToString();
+            EditMessage(messageKey);
         }
 
-        private void MenuItem_Play(object sender, RoutedEventArgs e)
+        private void ContextMenuItem_Edit(object sender, RoutedEventArgs e)
         {
-
+            string messageKey = ((Message)((FrameworkElement)sender).DataContext).id.ToString();
+            EditMessage(messageKey);
         }
+
+        private void ContextMenuItem_Play(object sender, RoutedEventArgs e)
+        {
+            string messageKey = ((Message)((FrameworkElement)sender).DataContext).id.ToString();
+            PlayMessage(messageKey);
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            string messageKey = ((Message)((FrameworkElement)sender).DataContext).id.ToString();
+            PlayMessage(messageKey);
+        }
+
+        private void PlayMessage(string messageKey)
+        {
+            NavigationService.Navigate(new Uri(String.Format("/DisplayBoardPage.xaml?id={0}", messageKey), UriKind.Relative));
+        }
+
+        private void EditMessage(string messageKey)
+        {
+            NavigationService.Navigate(new Uri(String.Format("/EditMessagePage.xaml?id={0}", messageKey), UriKind.Relative));
+        }
+
     }
 }

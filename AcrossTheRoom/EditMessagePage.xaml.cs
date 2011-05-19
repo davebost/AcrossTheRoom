@@ -11,18 +11,45 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using AcrossTheRoom.Models;
+using System.Reflection;
 
 namespace AcrossTheRoom
 {
     public partial class EditMessagePage : PhoneApplicationPage
     {
-        private Message _currentMessage = new Message();
-        private Boolean _newMessage = true;
+        private Message _currentMessage;
+        private Boolean _isNewMessage = true;
+
+        //List<Color> _colorList = new List<Color> {Colors.Black, Colors.Blue, Colors.Brown, Colors.Cyan, Colors.DarkGray, 
+        //    Colors.Gray, Colors.Green, Colors.LightGray, Colors.Magenta, Colors.Orange, Colors.Purple, Colors.Red, Colors.White, Colors.Yellow };
+
+        readonly string[] ColorList = { "Black", "Gray", "LightGray", "White", "Magenta", "Purple", "Brown", "Cyan", "Pink", "Orange", "Blue", "Red", "Green", "Yellow" };
 
         // Constructor
         public EditMessagePage()
         {
             InitializeComponent();
+
+            BackgroundListPicker.ItemsSource = ColorList;
+            ForegroundListPicker.ItemsSource = ColorList;
+            
+            this.BackgroundListPicker.SelectionChanged += new SelectionChangedEventHandler(BackgroundListPicker_SelectionChanged);
+            this.ForegroundListPicker.SelectionChanged += new SelectionChangedEventHandler(ForegroundListPicker_SelectionChanged);
+
+            BackgroundListPicker.SelectedItem = "LightGray";
+            ForegroundListPicker.SelectedItem = "Black";
+        }
+
+        void ForegroundListPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string colorString = this.ForegroundListPicker.SelectedItem.ToString();
+            MessageTextBox.Foreground = ColorHelper.GetBrushFromString(colorString);
+        }
+
+        void BackgroundListPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string colorString = this.BackgroundListPicker.SelectedItem.ToString();
+            MessageTextBox.Background = ColorHelper.GetBrushFromString(colorString);
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -34,9 +61,11 @@ namespace AcrossTheRoom
                 _currentMessage.Text = MessageTextBox.Text;
                 _currentMessage.AnimationType = (AnimationType)Enum.Parse(typeof(AnimationType), AnimationListPicker.SelectedItem.ToString(), true);
                 _currentMessage.Speed = (int)SpeedSlider.Value;
-                _currentMessage.FontSize = (int)FontSizeSlider.Value;
+                _currentMessage.FontScale = (int)FontScaleSlider.Value;
+                _currentMessage.ForegroundColor = ForegroundListPicker.SelectedItem.ToString();
+                _currentMessage.BackgroundColor = BackgroundListPicker.SelectedItem.ToString();
 
-                if (_newMessage)
+                if (_isNewMessage)
                     md.Messages.Add(_currentMessage);
 
                 md.Save();
@@ -59,6 +88,32 @@ namespace AcrossTheRoom
             NavigationService.GoBack();
         }
 
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            string id = "";
+            if (NavigationContext.QueryString.TryGetValue("id", out id))
+            {
+                Message msg = MessageData.Instance.Messages.FirstOrDefault(m => m.id == id);
+
+                // Edit Message
+                _isNewMessage = false;
+
+                _currentMessage = msg;
+
+                ForegroundListPicker.SelectedItem = _currentMessage.ForegroundColor;
+                BackgroundListPicker.SelectedItem = _currentMessage.BackgroundColor;
+            }
+            else
+            {
+                // New Message
+                _isNewMessage = true;
+                _currentMessage = new Message();
+
+            }
+
+        }
 
 
     }

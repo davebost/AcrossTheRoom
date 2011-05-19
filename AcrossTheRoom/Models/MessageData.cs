@@ -27,9 +27,9 @@ namespace AcrossTheRoom.Models
             {
                 using (IsolatedStorageFileStream stream = store.CreateFile(MESSAGEDATA_FILE_NAME))
                 {
-                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ObservableCollection<Message>));
+                    DataContractJsonSerializer serializer = 
+                        new DataContractJsonSerializer(typeof(ObservableCollection<Message>));
                     serializer.WriteObject(stream, _messages);
-                    System.Diagnostics.Debug.WriteLine("Data saved.");
                 }
             }
         }
@@ -40,10 +40,11 @@ namespace AcrossTheRoom.Models
             {
                 if (store.FileExists(MESSAGEDATA_FILE_NAME))
                 {
-                    using (IsolatedStorageFileStream stream = store.OpenFile(MESSAGEDATA_FILE_NAME, System.IO.FileMode.Open))
+                    using (IsolatedStorageFileStream stream = 
+                        store.OpenFile(MESSAGEDATA_FILE_NAME, System.IO.FileMode.Open))
                     {
-                        System.Diagnostics.Debug.WriteLine("Loading data...");
-                        DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ObservableCollection<Message>));
+                        DataContractJsonSerializer serializer = 
+                            new DataContractJsonSerializer(typeof(ObservableCollection<Message>));
                         _messages = (ObservableCollection<Message>)serializer.ReadObject(stream);
                     }
                 }

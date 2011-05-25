@@ -38,8 +38,12 @@ namespace AcrossTheRoom
 
         private void MessageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (MessageListBox.SelectedIndex == -1) return;
+
             string messageKey = ((Message)MessageListBox.SelectedItem).id.ToString();
             EditMessage(messageKey);
+
+            MessageListBox.SelectedIndex = -1;
         }
 
         private void ContextMenuItem_Edit(object sender, RoutedEventArgs e)

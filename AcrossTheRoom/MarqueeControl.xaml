@@ -7,9 +7,11 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480">
+    d:DesignHeight="480" d:DesignWidth="480"
+             Name="uc">
 
-    <Canvas Name="MainCanvas" >
-        <TextBlock Name="MarqueeTextBlock"></TextBlock>
+    <Canvas Name="MainCanvas" Background="{Binding Path=Background, ElementName=uc}">
+        <TextBlock Name="MarqueeTextBlock" 
+                   FontSize="{Binding Path=FontSize, ElementName=uc}"></TextBlock>
     </Canvas>
 </UserControl>

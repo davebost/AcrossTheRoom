@@ -7,15 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Custom="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions" 
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:PixelLab="clr-namespace:PixelLab"
+    xmlns:local="clr-namespace:AcrossTheRoom"
     x:Class="AcrossTheRoom.MainPage"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData /SampleData/MessageDataSampleData.xaml}">
+    shell:SystemTray.IsVisible="True" 
+    local:TiltEffect.IsTiltEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
 
         <ControlTemplate x:Key="PlayButtonDark" TargetType="Button">
-            <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5">
+            <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" Margin="{TemplateBinding Margin}">
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
@@ -28,15 +31,19 @@
                         <VisualState x:Name="MouseOver"/>
                         <VisualState x:Name="Pressed">
                             <Storyboard>
-                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-                            </Storyboard>
+                        		<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                        		<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                        	</Storyboard>
                         </VisualState>
                         <VisualState x:Name="Disabled"/>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
-                <Image Source="/Content/Images/AppBarIcons/dark/appbar.basecircle.rest.png"/>
-                <Image Source="/Content/Images/AppBarIcons/dark/appbar.transport.play.rest.png"/>
+                <Border BorderBrush="Black" BorderThickness="1" Padding="3">
+                	<Grid>
+                		<Image Source="/Content/Images/AppBarIcons/dark/appbar.basecircle.rest.png"/>
+                		<Image Source="/Content/Images/AppBarIcons/dark/appbar.transport.play.rest.png"/>
+                	</Grid>
+                </Border>
             </Grid>
         </ControlTemplate>
         <ControlTemplate x:Key="PlayButtonLight" TargetType="Button">
@@ -79,15 +86,15 @@
                     <toolkit:ContextMenu>
                         <toolkit:MenuItem
                             Header="edit"
-                            Click="MenuItem_Edit"/>
+                            Click="ContextMenuItem_Edit"/>
                         <toolkit:MenuItem
                             Header="play"
-                            Click="MenuItem_Play"/>
+                            Click="ContextMenuItem_Play"/>
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
-                <StackPanel Margin="0,15,5,0" Orientation="Horizontal">
-                    <Button Content="Button" HorizontalAlignment="Center" Height="50" Style="{StaticResource PlayButtonStyle}" Width="50"/>
-                    <TextBlock Text="{Binding Text}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="28"/>
+                <StackPanel Margin="5,15" Orientation="Horizontal">
+                    <Button x:Name="PlayButton" Click="PlayButton_Click" Content="Button" HorizontalAlignment="Center" Style="{StaticResource PlayButtonStyle}" Template="{StaticResource PlayButtonDark}"/>
+                    <PixelLab:DynamicTextBlock TextWrapping="NoWrap" Text="{Binding Text}" Margin="7,0,0,0" FontSize="28" Width="360" Height="38" HorizontalContentAlignment="Left" />
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -106,7 +113,7 @@
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Content/Images/AppBarIcons/dark/appbar.add.rest.png" Text="add message" Click="AddButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Content/Images/AppBarIcons/dark/appbar.add.rest.png" Text="add" Click="AddButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
@@ -127,7 +134,8 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ListBox x:Name="MessageListBox" 
                      Margin="8,8,24,8" 
-                     ItemTemplate="{StaticResource MessageListItemTemplate}" ItemsSource="{Binding Messages}" />
+                     ItemTemplate="{StaticResource MessageListItemTemplate}" ItemsSource="{Binding Messages}"
+                     SelectionChanged="MessageListBox_SelectionChanged"/>
         </Grid>
     </Grid>
 

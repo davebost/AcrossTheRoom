@@ -66,10 +66,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ColorToSolidColorBrushConverter.cs" />
+    <Compile Include="Controls\ScrollableTextBlock.cs" />
+    <Compile Include="Controls\TiltEffect.cs" />
+    <Compile Include="Helpers\ColorHelper.cs" />
+    <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="DisplayBoardPage.xaml.cs">
       <DependentUpon>DisplayBoardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DynamicTextBlock.cs" />
     <Compile Include="EditMessagePage.xaml.cs">
       <DependentUpon>EditMessagePage.xaml</DependentUpon>
     </Compile>
@@ -101,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MarqueeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -160,9 +168,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <DesignData Include="SampleData\MessageDataSampleData.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-    </DesignData>
+    <Folder Include="SampleData\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

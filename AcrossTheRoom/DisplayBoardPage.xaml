@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:AcrossTheRoom"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -14,8 +15,11 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Canvas x:Name="LayoutRoot" Background="Transparent">
-        
+    <Canvas x:Name="MainCanvas">
+
+        <local:ScrollableTextBlock  Text="ScrollableTextBlock"           
+                HorizontalAlignment="Left" x:Name="MarqueeTextBlock" 
+                  VerticalAlignment="Top" Height="427" Canvas.Left="800" />
     </Canvas>
 
 </phone:PhoneApplicationPage>

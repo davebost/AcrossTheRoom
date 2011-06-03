@@ -80,7 +80,7 @@ namespace AcrossTheRoom
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            this.DataContext = _currentMessage;
+        //    this.DataContext = _currentMessage;
         }
 
         private void returnToPreviousPage()
@@ -102,17 +102,15 @@ namespace AcrossTheRoom
 
                 _currentMessage = msg;
 
-                ForegroundListPicker.SelectedItem = _currentMessage.ForegroundColor;
-                BackgroundListPicker.SelectedItem = _currentMessage.BackgroundColor;
             }
             else
             {
                 // New Message
-                _isNewMessage = true;
                 _currentMessage = new Message();
-
+                _isNewMessage = true;
             }
 
+            this.DataContext = _currentMessage;
         }
 
 

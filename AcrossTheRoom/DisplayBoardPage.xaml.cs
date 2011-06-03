@@ -20,8 +20,10 @@ namespace AcrossTheRoom
         const int SPEED_MULTIPLIER = 1;
         const int MAX_TIME = 15;
         const int PIXELS_PER_SECOND = 200;
+        const int MAX_SPEED = 5;
+        const double SPEED_INTERVAL = .5;
 
-        private double _speed = 2.5;
+        Message _message;
 
         public DisplayBoardPage()
         {
@@ -33,7 +35,19 @@ namespace AcrossTheRoom
 
         void DisplayBoardPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Play();
+            switch (_message.AnimationType)
+            {
+                case AnimationType.Swipe:
+                    {
+                        Swipe();
+                        return;
+                    }
+                default:
+                    {
+                        RightToLeftMarquee();
+                        return;
+                    }
+            }
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -46,25 +60,8 @@ namespace AcrossTheRoom
                 Message msg = MessageData.Instance.Messages.FirstOrDefault(m => m.id == id);
                 if (msg != null)
                 {
-                    this.DataContext = msg;
-
-                    MarqueeTextBlock.Text = msg.Text;
-
-                    MainCanvas.Background = ColorHelper.GetBrushFromString(msg.BackgroundColor);
-                    MarqueeTextBlock.Foreground = ColorHelper.GetBrushFromString(msg.ForegroundColor);
-
-                    int fontScale = ((Message)this.DataContext).FontScale;
-                    if (fontScale == 0) fontScale = 1;
-
-
-                    MarqueeTextBlock.FontSize = 150 + (fontScale * FONT_SCALE_MULTIPLYER);
-                    System.Diagnostics.Debug.WriteLine("FontScale: " + fontScale.ToString());
-                    System.Diagnostics.Debug.WriteLine("FontSize: " + MarqueeTextBlock.FontSize.ToString());
-
-                    _speed = ((Message)this.DataContext).Speed;
-                    if (_speed == 0) _speed = 1;
-                    System.Diagnostics.Debug.WriteLine("Speed: " + _speed.ToString());
-
+                    _message = msg;
+                    this.DataContext = _message;
                 }
                 else
                 {
@@ -73,20 +70,18 @@ namespace AcrossTheRoom
             }
         }
 
-        public void Play()
-        {
-            RightToLeftMarquee();
-        }
-
         private void RightToLeftMarquee()
         {
-            //<DoubleAnimation Duration="5" To="-942" 
-            //  Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
-            //  Storyboard.TargetName="textBlock" d:IsOptimized="True"/>
+            MarqueeTextBlock.FontSize = getFontSize();
+
+            MainCanvas.Background = ColorHelper.GetBrushFromString(_message.BackgroundColor);
+            MarqueeTextBlock.Foreground = ColorHelper.GetBrushFromString(_message.ForegroundColor);
 
             RectangleGeometry rectangleGeometry = new RectangleGeometry();
             rectangleGeometry.Rect = new Rect(new Point(0, 0), new Size(2000, 480));
             MainCanvas.Clip = rectangleGeometry;
+
+            MarqueeTextBlock.Text = _message.Text;
 
             MarqueeTextBlock.Width = MarqueeTextBlock.ActualWidth;
             double height = 480 - MarqueeTextBlock.ActualHeight;
@@ -98,10 +93,12 @@ namespace AcrossTheRoom
 
             // Calculate duration
             double marqueeWidth = MarqueeTextBlock.ActualWidth;
-            double duration = marqueeWidth / (_speed * PIXELS_PER_SECOND);
+
+            int speed = (_message.Speed == 0 ? 0 : _message.Speed);
+            double duration = marqueeWidth / (speed * PIXELS_PER_SECOND);
 
             System.Diagnostics.Debug.WriteLine("Width: " + marqueeWidth.ToString() + "         Duration: " + duration.ToString());
-            doubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(duration)); 
+            doubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(duration));
             Storyboard storyboard = new Storyboard();
             storyboard.Children.Add(doubleAnimation);
             Storyboard.SetTarget(doubleAnimation, MarqueeTextBlock);
@@ -109,6 +106,110 @@ namespace AcrossTheRoom
             storyboard.Begin();
 
         }
+
+        private int getFontSize()
+        {
+            int fontScale = (_message.FontScale == 0 ? 0 : _message.FontScale);
+            return 150 + (fontScale * FONT_SCALE_MULTIPLYER);
+        }
+
+        private void Swipe()
+        {
+            Storyboard storyBoard = new Storyboard();
+
+            MainCanvas.Children.Clear();
+            MainCanvas.Background = ColorHelper.GetBrushFromString(_message.BackgroundColor);
+
+            string text = _message.Text;
+
+            string[] words = text.Split(' ');
+            for (var i = 0; i <= words.Length - 1; i++)
+            {
+                Border b = new Border();
+                b.BorderThickness = new Thickness(0);
+                b.Width = 800;
+                b.Height = 480;
+
+                TextBlock tb = getTextBlock();
+                tb.Text = words[i];
+                tb.FontSize = getFontSize();
+                tb.Foreground = ColorHelper.GetBrushFromString(_message.ForegroundColor);
+                while (tb.ActualWidth > 800)
+                {
+                    tb.FontSize -= 1;
+                    System.Diagnostics.Debug.WriteLine("FontSize: " + tb.FontSize);
+                }
+                tb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                tb.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+
+                //if (i == 0) b.Background = new SolidColorBrush(Colors.Red);
+                //if (i == 1) b.Background = new SolidColorBrush(Colors.Yellow);
+
+                b.Child = tb;
+                b.SetValue(Canvas.TopProperty, Convert.ToDouble(-480));
+
+                MainCanvas.Children.Add(b);
+
+                double seconds = ((MAX_SPEED - _message.Speed) + 1) * SPEED_INTERVAL;
+
+                double startingTime = (i * 2) * seconds;
+
+                EasingDoubleKeyFrame edkf;
+
+                // Hide elements during repeat
+
+                DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
+
+                CircleEase ce = new CircleEase();
+                ce.EasingMode = EasingMode.EaseOut;
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime));
+                edkf.Value = -480;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + seconds));
+                edkf.Value = 0;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + (seconds * 2)));
+                edkf.Value = 0;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + (seconds * 3)));
+                edkf.Value = 480;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                Storyboard.SetTarget(animation, b);
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(Canvas.Top)"));
+
+                storyBoard.Children.Add(animation);
+
+            }
+
+            if (storyBoard.Children.Count > 0)
+            {
+                storyBoard.RepeatBehavior = RepeatBehavior.Forever;
+                storyBoard.Begin();
+            }
+
+        }
+
+        private TextBlock getTextBlock()
+        {
+            TextBlock textBlock = new TextBlock();
+            textBlock.TextWrapping = TextWrapping.NoWrap;
+            textBlock.FontSize = getFontSize();
+            return textBlock;
+        }
+
 
     }
 }

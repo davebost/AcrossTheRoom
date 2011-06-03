@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="Controls\ScrollableTextBlock.cs" />
     <Compile Include="Controls\TiltEffect.cs" />
+    <Compile Include="Converters\AnimationTypeEnumConverter.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="DisplayBoardPage.xaml.cs">
@@ -83,6 +84,7 @@
     <Compile Include="MarqueeControl.xaml.cs">
       <DependentUpon>MarqueeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnimationType.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

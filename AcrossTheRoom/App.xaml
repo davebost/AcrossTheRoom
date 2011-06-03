@@ -9,6 +9,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <local:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
+        <local:AnimationTypeEnumConverter x:Key="AnimationTypeEnumConverter" />
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

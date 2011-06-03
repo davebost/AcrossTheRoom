@@ -4,6 +4,7 @@
   <App xmlns="" ProductID="{650ee672-8134-4e91-acd6-fb599b407fc6}" Title="AcrossTheRoom" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="AcrossTheRoom author" Description="Sample description" Publisher="AcrossTheRoom">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
+      <Capability Name="ID_CAP_NETWORKING"/>
     </Capabilities>
     <Tasks>
       <DefaultTask  Name ="_default" NavigationPage="MainPage.xaml"/>

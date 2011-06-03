@@ -28,6 +28,7 @@ namespace AcrossTheRoom.Models
         {
             get
             {
+                if (_foregroundColor == null || _foregroundColor.Length == 0) _foregroundColor = "Black";
                 return _foregroundColor;
             }
             set {
@@ -41,6 +42,7 @@ namespace AcrossTheRoom.Models
         {
             get
             {
+                if (_backgroundColor == null || _backgroundColor.Length == 0) _backgroundColor = "White";
                 return _backgroundColor;
             }
             set
@@ -55,6 +57,7 @@ namespace AcrossTheRoom.Models
         {
             get
             {
+                if (_speed == 0) _speed = 3;
                 return _speed;
             }
             set
@@ -83,6 +86,7 @@ namespace AcrossTheRoom.Models
         {
             get
             {
+                if (_fontScale == 0) _fontScale = 3;
                 return _fontScale;
             }
             set
@@ -107,13 +111,6 @@ namespace AcrossTheRoom.Models
             }
         }
 
-    }
-
-    public enum AnimationType
-    {
-        None,
-        Scrolling,
-        Flash
     }
 
 }

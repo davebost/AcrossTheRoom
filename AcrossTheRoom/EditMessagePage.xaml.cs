@@ -113,6 +113,17 @@ namespace AcrossTheRoom
             this.DataContext = _currentMessage;
         }
 
+        private void DeleteMessage_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Delete this message?", "Delete Message", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                //Delete Message and return to main page
+                MessageData.Instance.Messages.Remove(_currentMessage);
+                NavigationService.GoBack();
+            }
+
+        }
+
 
     }
 }

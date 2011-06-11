@@ -11,17 +11,69 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using AcrossTheRoom.Models;
+using Microsoft.Advertising.Mobile.UI;
 
 namespace AcrossTheRoom
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        const string AD_CENTER_APPLICATION_ID = "d37c36a7-37f5-4825-875f-cf3fdcfd7338";
+        const string AD_CENTER_AD_UNIT_ID = "67648";
+
         MessageData _md = MessageData.Instance;
+
+        AdControl adControl;
+        string adCenterApplicationId;
+        string adUnitId;
 
         public MainPage()
         {
             InitializeComponent();
+
+#if DEBUG
+            AdControl.TestMode = true;
+            adCenterApplicationId = "test_client";
+            adUnitId = "Image480x80";
+#else
+            AdControl.TestMode = false;
+            adCenterApplicationId = AD_CENTER_APPLICATION_ID;
+            adUnitId = AD_CENTER_AD_UNIT_ID;
+#endif
+
+            // Set up Ad Control
+            AdControl adControl = new AdControl(adCenterApplicationId, // ApplicationID, d37c36a7-37f5-4825-875f-cf3fdcfd7338 
+                                                adUnitId,    // AdUnitID
+                                                AdModel.Contextual, // AdModel
+                                                true);         // RotationEnabled
+            adControl.Width = 480;
+            adControl.Height = 80;
+
+            // Add Ad Control to MainPage Layout
+            Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
+            if (grid != null)
+            {
+                //grid.Children.Add(adControl);
+                // Subscribe to this event if your application has multiple pages.
+                // Single page applications do not need this code.
+                this.Unloaded += new RoutedEventHandler(MainPage_Unloaded);
+            }
+
+            // Load the message list
             _md.Load();
+        }
+
+        void MainPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
+            if (grid != null)
+            {
+                if (grid.Children.Contains(adControl))
+                    grid.Children.Remove(adControl);
+
+                this.Unloaded -= new RoutedEventHandler(MainPage_Unloaded);
+
+                adControl = null;
+            }
         }
 
         private void AddButton_Click(object sender, EventArgs e)

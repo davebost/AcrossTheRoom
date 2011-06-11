@@ -38,9 +38,9 @@
                         <VisualState x:Name="Disabled"/>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
-                <Border BorderBrush="Black" BorderThickness="1" Padding="3">
+                <Border BorderThickness="5,5,10,5" Padding="3">
                 	<Grid>
-                		<Image Source="/Content/Images/AppBarIcons/dark/appbar.basecircle.rest.png"/>
+                		<Image Source="/Content/Images/AppBarIcons/dark/appbar.basecircle.rest.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 		<Image Source="/Content/Images/AppBarIcons/dark/appbar.transport.play.rest.png"/>
                 	</Grid>
                 </Border>
@@ -118,10 +118,15 @@
     </phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot">
+       
+        <Grid.Background>
+            <ImageBrush ImageSource="/AcrossTheRoom-Background.png" Stretch="UniformToFill" />
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
@@ -131,12 +136,14 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,12">
             <ListBox x:Name="MessageListBox" 
                      Margin="8,8,24,8" 
                      ItemTemplate="{StaticResource MessageListItemTemplate}" ItemsSource="{Binding Messages}"
                      SelectionChanged="MessageListBox_SelectionChanged"/>
         </Grid>
+        
+        <Grid x:Name="AdControlPanel" Grid.Row="2" Height="80" />
     </Grid>
 
 </phone:PhoneApplicationPage>

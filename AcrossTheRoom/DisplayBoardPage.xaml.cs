@@ -42,6 +42,11 @@ namespace AcrossTheRoom
                         Swipe();
                         return;
                     }
+                case AnimationType.Flash:
+                    {
+                        Flash();
+                        return;
+                    }
                 default:
                     {
                         RightToLeftMarquee();
@@ -200,6 +205,70 @@ namespace AcrossTheRoom
                 storyBoard.Begin();
             }
 
+        }
+
+        private void Flash()
+        { 
+            Storyboard storyBoard = new Storyboard();
+
+            MainCanvas.Children.Clear();
+            MainCanvas.Background = ColorHelper.GetBrushFromString(_message.BackgroundColor);
+
+            Grid g = new Grid();
+            g.Width = 800;
+            g.Height = 480;
+            g.ColumnDefinitions.Add(new ColumnDefinition());
+            g.RowDefinitions.Add(new RowDefinition());
+            MainCanvas.Children.Add(g);
+
+            string text = _message.Text;
+
+            string[] words = text.Split(' ');
+            for (var i = 0; i <= words.Length - 1; i++)
+            {
+                TextBlock tb = getTextBlock();
+                tb.Text = words[i];
+                tb.FontSize = getFontSize();
+                tb.Foreground = ColorHelper.GetBrushFromString(_message.ForegroundColor);
+                while (tb.ActualWidth > 800)
+                {
+                    tb.FontSize -= 1;
+                    System.Diagnostics.Debug.WriteLine("FontSize: " + tb.FontSize);
+                }
+                tb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                tb.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                tb.Visibility = System.Windows.Visibility.Collapsed;
+
+                g.Children.Add(tb);
+
+                double seconds = ((MAX_SPEED - _message.Speed) + 1) * SPEED_INTERVAL;
+
+                double startingTime = ((i * 2) + 1) * seconds;
+
+                ObjectAnimationUsingKeyFrames animation = new ObjectAnimationUsingKeyFrames();
+
+                DiscreteObjectKeyFrame visibleKeyFrame = new DiscreteObjectKeyFrame();
+                visibleKeyFrame.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime));
+                visibleKeyFrame.Value = Visibility.Visible;
+                animation.KeyFrames.Add(visibleKeyFrame);
+
+                DiscreteObjectKeyFrame collapsedKeyFrame = new DiscreteObjectKeyFrame();
+                collapsedKeyFrame.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + seconds));
+                collapsedKeyFrame.Value = Visibility.Collapsed;
+                animation.KeyFrames.Add(collapsedKeyFrame);
+
+                Storyboard.SetTarget(animation, tb);
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(UIElement.Visibility)"));
+
+                storyBoard.Children.Add(animation);
+
+            }
+
+            if (storyBoard.Children.Count > 0)
+            {
+                storyBoard.RepeatBehavior = RepeatBehavior.Forever;
+                storyBoard.Begin();
+            }        
         }
 
         private TextBlock getTextBlock()

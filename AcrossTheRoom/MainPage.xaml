@@ -9,6 +9,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:PixelLab="clr-namespace:PixelLab"
     xmlns:local="clr-namespace:AcrossTheRoom"
+    xmlns:ad="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
     x:Class="AcrossTheRoom.MainPage"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
@@ -17,7 +18,7 @@
 
     <phone:PhoneApplicationPage.Resources>
 
-        <ControlTemplate x:Key="PlayButtonDark" TargetType="Button">
+        <ControlTemplate x:Key="PlayButton" TargetType="Button">
             <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" Margin="{TemplateBinding Margin}">
                 <Grid.RenderTransform>
                     <CompositeTransform/>
@@ -31,25 +32,18 @@
                         <VisualState x:Name="MouseOver"/>
                         <VisualState x:Name="Pressed">
                             <Storyboard>
-                        		<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-                        		<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-                        	</Storyboard>
+                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                            </Storyboard>
                         </VisualState>
                         <VisualState x:Name="Disabled"/>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Border BorderThickness="5,5,10,5" Padding="3">
-                	<Grid>
-                		<Image Source="/Content/Images/AppBarIcons/dark/appbar.basecircle.rest.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                		<Image Source="/Content/Images/AppBarIcons/dark/appbar.transport.play.rest.png"/>
+                    <Grid Margin="0">
+                		<Image Source="{StaticResource IconUri}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 	</Grid>
                 </Border>
-            </Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="PlayButtonLight" TargetType="Button">
-            <Grid>
-                <Image Source="/Content/Images/AppBarIcons/light/appbar.basecircle.rest.png"/>
-                <Image Source="/Content/Images/AppBarIcons/light/appbar.transport.play.rest.png"/>
             </Grid>
         </ControlTemplate>
         <Style x:Key="PlayButtonStyle" TargetType="Button">
@@ -70,7 +64,7 @@
                                     <VisualState x:Name="Disabled"/>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Button x:Name="button" Content="Button" Template="{StaticResource PlayButtonDark}" RenderTransformOrigin="0.5,0.5">
+                            <Button x:Name="button" Content="Button" Template="{StaticResource PlayButton}" RenderTransformOrigin="0.5,0.5">
                                 <Button.RenderTransform>
                                     <CompositeTransform/>
                                 </Button.RenderTransform>
@@ -93,8 +87,8 @@
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
                 <StackPanel Margin="5,15" Orientation="Horizontal">
-                    <Button x:Name="PlayButton" Click="PlayButton_Click" Content="Button" HorizontalAlignment="Center" Style="{StaticResource PlayButtonStyle}" Template="{StaticResource PlayButtonDark}"/>
-                    <PixelLab:DynamicTextBlock TextWrapping="NoWrap" Text="{Binding Text}" Margin="7,0,0,0" FontSize="28" Width="360" Height="38" HorizontalContentAlignment="Left" />
+                    <Button x:Name="PlayButton" Click="PlayButton_Click" Content="Button" HorizontalAlignment="Center" Style="{StaticResource PlayButtonStyle}" Template="{StaticResource PlayButton}"/>
+                    <PixelLab:DynamicTextBlock TextWrapping="NoWrap" Text="{Binding Text}" Margin="7,0,0,0" FontSize="28" Width="356" Height="38" HorizontalContentAlignment="Left" />
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -114,15 +108,15 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Content/Images/AppBarIcons/dark/appbar.add.rest.png" Text="add" Click="AddButton_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about AcrossTheRoom" Click="AboutMenuItem_Click" />
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot">
-       
-        <Grid.Background>
-            <ImageBrush ImageSource="/AcrossTheRoom-Background.png" Stretch="UniformToFill" />
-        </Grid.Background>
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundUri}">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -138,12 +132,26 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,12">
             <ListBox x:Name="MessageListBox" 
-                     Margin="8,8,24,8" 
+                     Margin="8,8,8,8" 
                      ItemTemplate="{StaticResource MessageListItemTemplate}" ItemsSource="{Binding Messages}"
                      SelectionChanged="MessageListBox_SelectionChanged"/>
         </Grid>
-        
-        <Grid x:Name="AdControlPanel" Grid.Row="2" Height="80" />
+
+        <Grid x:Name="AdControlPanel" Grid.Row="2" Height="80" Margin="0">
+
+            <ad:AdControl x:Name="adControl" Height="80" Width="480"
+                            RotationEnabled="True" Grid.Row="1" Grid.Column="1"
+                            ApplicationId="d37c36a7-37f5-4825-875f-cf3fdcfd7338"
+                            AdUnitId="67648"  />
+            <!--
+            <ad:AdControl x:Name="adControl" Height="80" Width="480"
+                            RotationEnabled="True" Grid.Row="1" Grid.Column="1" 
+                            ApplicationId="test_client"
+                            AdUnitId="Image480_80" />
+            -->
+
+        </Grid>
+
     </Grid>
 
 </phone:PhoneApplicationPage>

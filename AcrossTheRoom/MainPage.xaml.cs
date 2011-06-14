@@ -22,63 +22,63 @@ namespace AcrossTheRoom
 
         MessageData _md = MessageData.Instance;
 
-        AdControl adControl;
-        string adCenterApplicationId;
-        string adUnitId;
-
         public MainPage()
         {
             InitializeComponent();
 
-#if DEBUG
-            AdControl.TestMode = true;
-            adCenterApplicationId = "test_client";
-            adUnitId = "Image480x80";
-#else
-            AdControl.TestMode = false;
-            adCenterApplicationId = AD_CENTER_APPLICATION_ID;
-            adUnitId = AD_CENTER_AD_UNIT_ID;
-#endif
+            //// Set up Ad Control
+            //AdControl adControl = new AdControl(AD_CENTER_APPLICATION_ID, // ApplicationID, d37c36a7-37f5-4825-875f-cf3fdcfd7338 
+            //                                    AD_CENTER_AD_UNIT_ID,    // AdUnitID
+            //                                    AdModel.Contextual, // AdModel
+            //                                    true);         // RotationEnabled
 
-            // Set up Ad Control
-            AdControl adControl = new AdControl(adCenterApplicationId, // ApplicationID, d37c36a7-37f5-4825-875f-cf3fdcfd7338 
-                                                adUnitId,    // AdUnitID
-                                                AdModel.Contextual, // AdModel
-                                                true);         // RotationEnabled
-            adControl.Width = 480;
-            adControl.Height = 80;
+            adControl.AdControlError += new EventHandler<ErrorEventArgs>(adControl_AdControlError);
+
+            //adControl.Width = 480;
+            //adControl.Height = 80;
 
             // Add Ad Control to MainPage Layout
-            Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
-            if (grid != null)
-            {
-                //grid.Children.Add(adControl);
-                // Subscribe to this event if your application has multiple pages.
-                // Single page applications do not need this code.
-                this.Unloaded += new RoutedEventHandler(MainPage_Unloaded);
-            }
+            //Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
+            //if (grid != null)
+            //{
+            //    //grid.Children.Add(adControl);
+            //    // Subscribe to this event if your application has multiple pages.
+            //    // Single page applications do not need this code.
+            //    this.Unloaded += new RoutedEventHandler(MainPage_Unloaded);
+            //}
+
 
             // Load the message list
             _md.Load();
         }
 
+        void adControl_AdControlError(object sender, ErrorEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(String.Format("{0} - {1}", e.ErrorCode, e.ErrorDescription));
+        }
+
         void MainPage_Unloaded(object sender, RoutedEventArgs e)
         {
-            Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
-            if (grid != null)
-            {
-                if (grid.Children.Contains(adControl))
-                    grid.Children.Remove(adControl);
+            //Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
+            //if (grid != null)
+            //{
+            //    if (grid.Children.Contains(adControl))
+            //        grid.Children.Remove(adControl);
 
-                this.Unloaded -= new RoutedEventHandler(MainPage_Unloaded);
+            //    this.Unloaded -= new RoutedEventHandler(MainPage_Unloaded);
 
-                adControl = null;
-            }
+            //    adControl = null;
+            //}
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/EditMessagePage.xaml", UriKind.Relative));
+        }
+
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -126,5 +126,5 @@ namespace AcrossTheRoom
             NavigationService.Navigate(new Uri(String.Format("/EditMessagePage.xaml?id={0}", messageKey), UriKind.Relative));
         }
 
-    }
+     }
 }

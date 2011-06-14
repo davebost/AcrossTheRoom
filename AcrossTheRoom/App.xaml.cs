@@ -8,11 +8,13 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using AcrossTheRoom.Models;
+using Microsoft.Advertising.Mobile.UI;
 
 namespace AcrossTheRoom
 {
@@ -52,6 +54,34 @@ namespace AcrossTheRoom
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            // Set IconUri and BackgroundUri resource based on current theme
+            string imageUri;
+            this.Resources.Remove("IconUri");
+            if ((Visibility)this.Resources["PhoneDarkThemeVisibility"] == Visibility.Visible)
+            {
+                this.Resources.Add("IconUri", "/Content/Images/AppBarIcons/dark/play.png");
+                imageUri = "/Content/Images/Background-Dark.jpg";
+            }
+            else
+            {
+                this.Resources.Add("IconUri", "/Content/Images/AppBarIcons/light/play.png");
+                imageUri = "/Content/Images/Background-Light.jpg";
+            }
+
+            ImageBrush ib = (ImageBrush)this.Resources["BackgroundUri"];
+            if (ib != null)
+            {
+                ib.ImageSource = new BitmapImage(new Uri(imageUri, UriKind.Relative));
+            }
+
+
+#if DEBUG
+            AdControl.TestMode = true;
+#else
+            AdControl.TestMode = false;
+#endif
+
         }
 
         // Code to execute when the application is launching (eg, from Start)

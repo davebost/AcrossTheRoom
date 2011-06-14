@@ -10,6 +10,8 @@
     <Application.Resources>
         <local:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
         <local:AnimationTypeEnumConverter x:Key="AnimationTypeEnumConverter" />
+        <BitmapImage x:Key="IconUri" />
+        <ImageBrush x:Key="BackgroundUri" />
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

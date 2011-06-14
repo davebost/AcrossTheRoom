@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.0">
-  <App xmlns="" ProductID="{650ee672-8134-4e91-acd6-fb599b407fc6}" Title="AcrossTheRoom" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="AcrossTheRoom author" Description="Sample description" Publisher="AcrossTheRoom">
+  <App xmlns="" ProductID="{650ee672-8134-4e91-acd6-fb599b407fc6}" Title="Across the Room" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="AcrossTheRoom author" Description="Sample description" Publisher="AcrossTheRoom">
     <IconPath IsRelative="true" IsResource="false">AcrossTheRoom-Icon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_IDENTITY_USER" />
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
@@ -11,9 +13,9 @@
     <Tokens>
       <PrimaryToken TokenID="AcrossTheRoomToken" TaskName="_default">
         <TemplateType5>
-          <BackgroundImageURI IsRelative="true" IsResource="false">AcrossTheRoom-Tile.png</BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">TransparentTile.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>AcrossTheRoom</Title>
+          <Title></Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>

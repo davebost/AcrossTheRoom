@@ -15,7 +15,8 @@ namespace AcrossTheRoom
     {
         Scrolling,
         Swipe,
-        Flash
+        Flash,
+        None
     }
 
 }

@@ -21,7 +21,7 @@ namespace AcrossTheRoom
         const int MAX_TIME = 15;
         const int PIXELS_PER_SECOND = 200;
         const int MAX_SPEED = 5;
-        const double SPEED_INTERVAL = .5;
+        const double SPEED_INTERVAL = .3;
 
         Message _message;
 
@@ -45,6 +45,11 @@ namespace AcrossTheRoom
                 case AnimationType.Flash:
                     {
                         Flash();
+                        return;
+                    }
+                case AnimationType.None:
+                    {
+                        DisplayStaticMessage();
                         return;
                     }
                 default:
@@ -114,7 +119,7 @@ namespace AcrossTheRoom
 
         private int getFontSize()
         {
-            int fontScale = (_message.FontScale == 0 ? 0 : _message.FontScale);
+            int fontScale = (_message.FontScale == 0 ? 1 : _message.FontScale);
             return 150 + (fontScale * FONT_SCALE_MULTIPLYER);
         }
 
@@ -146,9 +151,6 @@ namespace AcrossTheRoom
                 }
                 tb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                 tb.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-
-                //if (i == 0) b.Background = new SolidColorBrush(Colors.Red);
-                //if (i == 1) b.Background = new SolidColorBrush(Colors.Yellow);
 
                 b.Child = tb;
                 b.SetValue(Canvas.TopProperty, Convert.ToDouble(-480));
@@ -208,7 +210,7 @@ namespace AcrossTheRoom
         }
 
         private void Flash()
-        { 
+        {
             Storyboard storyBoard = new Storyboard();
 
             MainCanvas.Children.Clear();
@@ -268,7 +270,56 @@ namespace AcrossTheRoom
             {
                 storyBoard.RepeatBehavior = RepeatBehavior.Forever;
                 storyBoard.Begin();
-            }        
+            }
+        }
+
+        private void DisplayStaticMessage()
+        {
+            MainCanvas.Children.Clear();
+            MainCanvas.Background = ColorHelper.GetBrushFromString(_message.BackgroundColor);
+
+            Grid g = new Grid();
+            g.ColumnDefinitions.Add(new ColumnDefinition());
+            g.RowDefinitions.Add(new RowDefinition());
+            g.Margin = new Thickness(0);
+            g.Height = 480;
+            g.Width = 800;
+            MainCanvas.Children.Add(g);
+
+            string text = _message.Text;
+
+            TextBlock tb = getTextBlock();
+            tb.Margin = new Thickness(10);
+            tb.Text = text;
+
+            int fontScale = (_message.FontScale == 0 ? 1 : _message.FontScale);
+            int fontSize =  50 + (fontScale * FONT_SCALE_MULTIPLYER);
+            tb.FontSize = fontSize;
+
+            tb.Foreground = ColorHelper.GetBrushFromString(_message.ForegroundColor);
+            tb.TextWrapping = TextWrapping.Wrap;
+            tb.TextAlignment = TextAlignment.Center;
+
+            tb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            tb.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+
+            while (tb.ActualWidth >= 780)
+            {
+                tb.FontSize -= 1;
+                System.Diagnostics.Debug.WriteLine("FontSize: " + tb.FontSize.ToString());
+            }
+
+            while (tb.ActualHeight >= 460)
+            {
+                tb.FontSize -= 1;
+                System.Diagnostics.Debug.WriteLine("FontSize: " + tb.FontSize.ToString());
+            }
+
+            g.Children.Add(tb);
+
+            Grid.SetColumn(tb, 0);
+            Grid.SetRow(tb, 0);
+
         }
 
         private TextBlock getTextBlock()

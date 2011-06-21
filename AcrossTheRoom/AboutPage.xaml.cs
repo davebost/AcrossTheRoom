@@ -17,28 +17,10 @@ namespace AcrossTheRoom
 {
     public partial class AboutPage : PhoneApplicationPage
     {
-        bool isBrowserLoaded = false;
-        string _releaseNotesHtml;
-
         public AboutPage()
         {
             InitializeComponent();
 
-            this.AboutPivot.LoadedPivotItem += new EventHandler<PivotItemEventArgs>(AboutPivot_LoadedPivotItem);
-
-        }
-
-        void AboutPivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
-        {
-            if (e.Item.Name == "WhatsNew")
-            {
-                if (!isBrowserLoaded)
-                {
-                    webBrowser.NavigateToString(_releaseNotesHtml);
-                    isBrowserLoaded = true;
-                    webBrowser.Visibility = System.Windows.Visibility.Visible;
-                }
-            }
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -46,16 +28,26 @@ namespace AcrossTheRoom
             base.OnNavigatedTo(e);
 
             // Read ReleaseNotes.htm
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("AcrossTheRoom.ReleaseNotes.htm"))
+            try
             {
-                using (StreamReader reader = new StreamReader(stream))
+                System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                using (Stream stream = assembly.GetManifestResourceStream("AcrossTheRoom.ChangeLog.xaml"))
                 {
-                    _releaseNotesHtml = reader.ReadToEnd();
-                    if (_releaseNotesHtml.Length > 0) _releaseNotesHtml = applyStyleToHtml(_releaseNotesHtml);
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string xaml = reader.ReadToEnd();
+                        var x = System.Windows.Markup.XamlReader.Load(xaml);
+                        if (x != null)
+                        {
+                            WhatsNew.Content = x;
+                        }
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error in loading What's New XAML: " + ex.Message.ToString());
+            }
         }
 
         private void FeedbackButton_Click(object sender, RoutedEventArgs e)
@@ -65,30 +57,6 @@ namespace AcrossTheRoom
             task.To = "corganinteractive@live.com";
             task.Show();
         }
-
-        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (((Pivot)sender).SelectedIndex == 1)
-            //{
-            //    if (!isBrowserLoaded)
-            //    {
-            //        webBrowser.NavigateToString(applyStyleToHtml(_releaseNotesHtml));
-            //        isBrowserLoaded = true;
-            //        webBrowser.Visibility = System.Windows.Visibility.Visible;
-            //    }
-            //}
-        }
-
-        private string applyStyleToHtml(string html)
-        {
-            // apply style based on the current theme
-
-            string foregroundColor;
-            string backgroundColor;
-
-            return string.Format(html, this.webBrowser.Width.ToString(), "black", "white", "12");
-        }
-
 
     }
 }

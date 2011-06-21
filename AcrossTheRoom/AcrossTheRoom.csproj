@@ -88,9 +88,6 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MarqueeControl.xaml.cs">
-      <DependentUpon>MarqueeControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\AnimationType.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageData.cs" />
@@ -105,6 +102,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <EmbeddedResource Include="ChangeLog.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Page Include="DisplayBoardPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,10 +115,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MarqueeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -185,10 +182,10 @@
     <Content Include="Content\Images\Background-Light.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="ReleaseNotes.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <Resource Include="SplashScreenImage.jpg" />
+    <Content Include="TransparentLetterTile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TransparentTile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -198,9 +195,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SampleData\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="appbar.basecircle.rest.png" />
     <Resource Include="appbar.transport.play.rest.png" />

@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:local="clr-namespace:AcrossTheRoom.Controls"
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
 	x:Class="AcrossTheRoom.AboutPage"
 	Orientation="Portrait"
@@ -67,25 +68,25 @@
 		
 		<!--TitlePanel contains the name of the application and page title-->
 		<Grid x:Name="ContentPanel" Margin="12,0,0,0" Grid.Row="1" >
-			<controls:Pivot x:Name="AboutPivot" Title="ACROSS THE ROOM" VerticalAlignment="Top" Height="607" SelectionChanged="Pivot_SelectionChanged">
+			<controls:Pivot x:Name="AboutPivot" Title="ACROSS THE ROOM" VerticalAlignment="Top" Height="607">
 				<controls:PivotItem Header="about" Margin="12,28,12,0">
-					<StackPanel HorizontalAlignment="Left" Margin="12,0,0,0">
+					<StackPanel HorizontalAlignment="Left" Margin="12,0,0,0" Height="607" Width="443">
 						<StackPanel Margin="0,0,0,50">
-							<TextBlock TextWrapping="Wrap" Text="Across the Room" FontSize="32" Foreground="{StaticResource PhoneAccentBrush}" Margin="0,0,0,8"/>
-							<TextBlock TextWrapping="Wrap" Text="by Dave Bost" FontSize="24"/>
+							<TextBlock TextWrapping="Wrap" Text="Across the Room" FontSize="36" Foreground="{StaticResource PhoneAccentBrush}" Margin="0,0,0,8"/>
+							<TextBlock TextWrapping="Wrap" Text="by Dave Bost" FontSize="28"/>
 							<TextBlock TextWrapping="Wrap"/>
-							<HyperlinkButton x:Name="UrlButton" Content="www.davebost.com" FontSize="18.667" Foreground="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Margin="0" Style="{StaticResource HyperlinkButtonStyle}" TargetName="_blank" NavigateUri="http://www.davebost.com/"/>
+							<HyperlinkButton x:Name="UrlButton" Content="www.davebost.com" FontSize="22" Foreground="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Margin="0" Style="{StaticResource HyperlinkButtonStyle}" TargetName="_blank" NavigateUri="http://www.davebost.com/"/>
 							<Grid Margin="0,0,120,0"/>
 						</StackPanel>
 						<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
-							<TextBlock TextWrapping="Wrap" Text="Version: 1.0.0.0" FontSize="18.667"/>
-							<HyperlinkButton x:Name="FeedbackButton" Content="Feedback: corganinteractive@live.com" Margin="0" Foreground="{StaticResource PhoneAccentBrush}" FontSize="21.333" Style="{StaticResource HyperlinkButtonStyle}" Click="FeedbackButton_Click" />
+							<TextBlock TextWrapping="Wrap" Text="Version: 1.0.0.0" FontSize="22"/>
+							<HyperlinkButton x:Name="FeedbackButton" Content="Feedback: corganinteractive@live.com" Margin="0" Foreground="{StaticResource PhoneAccentBrush}" FontSize="22" Style="{StaticResource HyperlinkButtonStyle}" Click="FeedbackButton_Click" />
 						</StackPanel>
 					</StackPanel>
 				</controls:PivotItem>
-				<controls:PivotItem x:Name="WhatsNew" Header="what's new">
+				<controls:PivotItem Header="what's new">
 					<Grid>
-						<phone:WebBrowser Width="420" x:Name="webBrowser" Visibility="Collapsed" Margin="8,0" Background="{StaticResource PhoneBackgroundBrush}" Foreground="{StaticResource PhoneAccentBrush}" Height="599" VerticalAlignment="Top" />
+                        <ContentPresenter x:Name="WhatsNew" />
 					</Grid>
 				</controls:PivotItem>
 			</controls:Pivot>

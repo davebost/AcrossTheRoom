@@ -9,24 +9,29 @@ namespace AcrossTheRoom
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            // Default to Scrolling
             if (null == value)
             {
-                return null;
+                return "Scrolling";
             }
 
             if (value is AnimationType)
             {
-                return ((Enum)value).ToString();
+                    string s = ((Enum)value).ToString();
+                    if (s == "SlideDown")
+                        return "Slide Down";
+                    else
+                        return s;
             }
 
             //Type type = value.GetType();            
             //throw new InvalidOperationException("Unsupported type ["+type.Name+"]");                    
-            return null;
+            return "Scrolling";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return (AnimationType)Enum.Parse(typeof(AnimationType), value.ToString(), true);
+            return (AnimationType)Enum.Parse(typeof(AnimationType), value.ToString().Replace(" ", ""), true);
         }
     }
 }

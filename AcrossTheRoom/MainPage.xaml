@@ -79,11 +79,14 @@
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu>
                         <toolkit:MenuItem
+                            Header="play"
+                            Click="ContextMenuItem_Play"/>
+                        <toolkit:MenuItem
                             Header="edit"
                             Click="ContextMenuItem_Edit"/>
                         <toolkit:MenuItem
-                            Header="play"
-                            Click="ContextMenuItem_Play"/>
+                            Header="delete"
+                            Click="ContextMenuItem_Delete"/>
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
                 <StackPanel Margin="5,15" Orientation="Horizontal">

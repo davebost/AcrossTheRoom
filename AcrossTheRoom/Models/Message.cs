@@ -7,7 +7,19 @@ namespace AcrossTheRoom.Models
 {
     public class Message : INotifyPropertyChanged
     {
-        public string id { get; private set; }
+        string _id;
+        public string ID
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+                NotifyPropertyChanged("ID");
+            }
+        }
 
         string _text = "";
         public string Text {
@@ -98,7 +110,7 @@ namespace AcrossTheRoom.Models
 
         public Message()
         {
-            id = Guid.NewGuid().ToString();
+            _id = Guid.NewGuid().ToString();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

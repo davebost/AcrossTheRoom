@@ -41,7 +41,7 @@
     <ContentPresenter 
         HorizontalAlignment="Stretch"
         ContentTemplate="{StaticResource bullet}"
-        Content="Added new animtations: Scrolling, Swipe, Flash." />
+        Content="Added new animtations: Scrolling, Slide Down, Flash." />
     <ContentPresenter 
         HorizontalAlignment="Stretch"
         ContentTemplate="{StaticResource bullet}"

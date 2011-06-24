@@ -17,18 +17,19 @@ namespace AcrossTheRoom
 {
     public partial class EditMessagePage : PhoneApplicationPage
     {
+        const string EDIT_STATE_KEY = "CurrentEditMessage";
+
         private Message _currentMessage;
         private Boolean _isNewMessage = true;
 
-        //List<Color> _colorList = new List<Color> {Colors.Black, Colors.Blue, Colors.Brown, Colors.Cyan, Colors.DarkGray, 
-        //    Colors.Gray, Colors.Green, Colors.LightGray, Colors.Magenta, Colors.Orange, Colors.Purple, Colors.Red, Colors.White, Colors.Yellow };
-
-        readonly string[] ColorList = { "Black", "Gray", "LightGray", "White", "Magenta", "Purple", "Brown", "Cyan", "Pink", "Orange", "Blue", "Red", "Green", "Yellow" };
+        readonly string[] ColorList = { "Black", "Gray", "LightGray", "White", "Magenta", "Purple", "Brown", "Cyan", "Orange", "Blue", "Red", "Green", "Yellow" };
 
         // Constructor
         public EditMessagePage()
         {
             InitializeComponent();
+
+            System.Diagnostics.Debug.WriteLine("EditMessagePage:ctor()");
 
             BackgroundListPicker.ItemsSource = ColorList;
             ForegroundListPicker.ItemsSource = ColorList;
@@ -58,12 +59,7 @@ namespace AcrossTheRoom
 
             if (MessageTextBox.Text.Trim().Length > 0)
             {
-                _currentMessage.Text = MessageTextBox.Text;
-                _currentMessage.AnimationType = (AnimationType)Enum.Parse(typeof(AnimationType), AnimationListPicker.SelectedItem.ToString(), true);
-                _currentMessage.Speed = (int)SpeedSlider.Value;
-                _currentMessage.FontScale = (int)FontScaleSlider.Value;
-                _currentMessage.ForegroundColor = ForegroundListPicker.SelectedItem.ToString();
-                _currentMessage.BackgroundColor = BackgroundListPicker.SelectedItem.ToString();
+                saveFormFields();
 
                 if (_isNewMessage)
                     md.Messages.Add(_currentMessage);
@@ -78,13 +74,9 @@ namespace AcrossTheRoom
             returnToPreviousPage();
         }
 
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
-        {
-        //    this.DataContext = _currentMessage;
-        }
-
         private void returnToPreviousPage()
         {
+            clearStateKey();
             NavigationService.GoBack();
         }
 
@@ -92,18 +84,48 @@ namespace AcrossTheRoom
         {
             base.OnNavigatedTo(e);
 
+            System.Diagnostics.Debug.WriteLine("EditMessagePage:OnNavigatedTo");
+
+            _currentMessage = null;
+
             string id = "";
-            if (NavigationContext.QueryString.TryGetValue("id", out id))
+            if (this.State.ContainsKey(EDIT_STATE_KEY))
             {
-                Message msg = MessageData.Instance.Messages.FirstOrDefault(m => m.id == id);
-
-                // Edit Message
-                _isNewMessage = false;
-
-                _currentMessage = msg;
-
+                // Retrieve Message from state
+                Message stateMessage = (Message)this.State[EDIT_STATE_KEY];
+                
+                // Strange data binding behavior; on Activated from Tombstoning, we need to pull reference from 
+                // our persistent storage and manually set values based on the last state of the form
+                // TODO: Investigate weird data binding issue
+                _currentMessage = MessageData.Instance.Messages.FirstOrDefault(m => m.ID == stateMessage.ID);
+                if (_currentMessage != null)
+                {
+                    // Build form from state values
+                    _currentMessage.Text = stateMessage.Text;
+                    _currentMessage.AnimationType = stateMessage.AnimationType;
+                    _currentMessage.Speed = stateMessage.Speed;
+                    _currentMessage.FontScale = stateMessage.FontScale;
+                    _currentMessage.ForegroundColor = stateMessage.ForegroundColor;
+                    _currentMessage.BackgroundColor = stateMessage.BackgroundColor;
+                    _isNewMessage = false;
+                }
+                else
+                {
+                    // if it's a new message, no need to manually set property values, a reference will do
+                    _currentMessage = stateMessage;
+                    _isNewMessage = true;
+                }
             }
-            else
+            else if (NavigationContext.QueryString.TryGetValue("id", out id))
+            {
+                _currentMessage = MessageData.Instance.Messages.FirstOrDefault(m => m.ID == id);
+                if (_currentMessage != null)
+                {
+                    _isNewMessage = false;
+                }
+            }
+
+            if (_currentMessage == null)
             {
                 // New Message
                 _currentMessage = new Message();
@@ -113,17 +135,51 @@ namespace AcrossTheRoom
             this.DataContext = _currentMessage;
         }
 
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            System.Diagnostics.Debug.WriteLine("EditMessagePage:OnNavigatedFrom");
+
+            // Determine if anything other than back button was pressed
+            if (e.Uri.ToString().StartsWith("app"))
+            {
+                // Selecting an app button doesn't trigger the lost focus, therefore the current databinding field won't be updated
+                saveFormFields();
+                this.State[EDIT_STATE_KEY] = this.DataContext;
+            }
+
+        }
+
         private void DeleteMessage_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Delete this message?", "Delete Message", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 //Delete Message and return to main page
                 MessageData.Instance.Messages.Remove(_currentMessage);
-                NavigationService.GoBack();
-            }
+                MessageData.Instance.Save();
 
+                returnToPreviousPage();
+            }
         }
 
+        private void saveFormFields()
+        {
+            string itemValue = AnimationListPicker.SelectedItem.ToString().Replace(" ", "");
+
+            _currentMessage = (Message)this.DataContext;
+            _currentMessage.Text = MessageTextBox.Text;
+            _currentMessage.AnimationType = (AnimationType)Enum.Parse(typeof(AnimationType), itemValue, true);
+            _currentMessage.Speed = (int)SpeedSlider.Value;
+            _currentMessage.FontScale = (int)FontScaleSlider.Value;
+            _currentMessage.ForegroundColor = ForegroundListPicker.SelectedItem.ToString();
+            _currentMessage.BackgroundColor = BackgroundListPicker.SelectedItem.ToString();
+        }
+
+        private void clearStateKey()
+        {
+            if (this.State.ContainsKey(EDIT_STATE_KEY)) this.State.Remove(EDIT_STATE_KEY);
+        }
 
     }
 }

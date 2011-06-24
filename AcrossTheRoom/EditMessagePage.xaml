@@ -13,7 +13,7 @@
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait" Orientation="Portrait"
 	shell:SystemTray.IsVisible="True" 
-	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" Loaded="PhoneApplicationPage_Loaded">
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
     <phone:PhoneApplicationPage.Resources>
         <ControlTemplate x:Key="PhoneDisabledTextBoxTemplate" TargetType="TextBox">
             <ContentControl x:Name="ContentElement" BorderThickness="0" HorizontalContentAlignment="Stretch" Margin="{StaticResource PhoneTextBoxInnerMargin}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="Stretch"/>
@@ -173,7 +173,7 @@
                 <TextBlock Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" x:Name="AnimationLabel" Text="Animation:" VerticalAlignment="Top" />
                 <toolkit:ListPicker x:Name="AnimationListPicker" Margin="10,0,12,15" SelectedItem="{Binding AnimationType, Mode=TwoWay, Converter={StaticResource AnimationTypeEnumConverter}}" >
                     <sys:String>Scrolling</sys:String>
-                    <sys:String>Swipe</sys:String>
+                    <sys:String>Slide Down</sys:String>
                     <sys:String>Flash</sys:String>
                     <sys:String>None</sys:String>
                 </toolkit:ListPicker>

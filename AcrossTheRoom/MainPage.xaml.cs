@@ -92,7 +92,7 @@ namespace AcrossTheRoom
         {
             if (MessageListBox.SelectedIndex == -1) return;
 
-            string messageKey = ((Message)MessageListBox.SelectedItem).id.ToString();
+            string messageKey = ((Message)MessageListBox.SelectedItem).ID.ToString();
             EditMessage(messageKey);
 
             MessageListBox.SelectedIndex = -1;
@@ -100,19 +100,34 @@ namespace AcrossTheRoom
 
         private void ContextMenuItem_Edit(object sender, RoutedEventArgs e)
         {
-            string messageKey = ((Message)((FrameworkElement)sender).DataContext).id.ToString();
+            string messageKey = ((Message)((FrameworkElement)sender).DataContext).ID.ToString();
             EditMessage(messageKey);
         }
 
         private void ContextMenuItem_Play(object sender, RoutedEventArgs e)
         {
-            string messageKey = ((Message)((FrameworkElement)sender).DataContext).id.ToString();
+            string messageKey = ((Message)((FrameworkElement)sender).DataContext).ID.ToString();
             PlayMessage(messageKey);
+        }
+
+        private void ContextMenuItem_Delete(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Delete this message?", "Delete Message", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                //Delete Message and return to main page
+                string messageKey = ((Message)((FrameworkElement)sender).DataContext).ID.ToString();
+                Message _message = MessageData.Instance.Messages.FirstOrDefault(m => m.ID == messageKey);
+                if (_message != null)
+                {
+                    MessageData.Instance.Messages.Remove(_message);
+                    MessageData.Instance.Save();
+                }
+            }
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            string messageKey = ((Message)((FrameworkElement)sender).DataContext).id.ToString();
+            string messageKey = ((Message)((FrameworkElement)sender).DataContext).ID.ToString();
             PlayMessage(messageKey);
         }
 

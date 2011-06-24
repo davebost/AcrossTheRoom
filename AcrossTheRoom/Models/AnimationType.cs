@@ -14,7 +14,7 @@ namespace AcrossTheRoom
     public enum AnimationType
     {
         Scrolling,
-        Swipe,
+        SlideDown,
         Flash,
         None
     }

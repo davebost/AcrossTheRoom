@@ -57,7 +57,13 @@ namespace AcrossTheRoom.Models
         {
             get
             {
-                if (_messages == null) _messages = new ObservableCollection<Message>();
+                if (_messages == null)
+                {
+                    // Attempt to Load data
+                    Load();
+
+                    if (_messages == null) _messages = new ObservableCollection<Message>();
+                }
                 return _messages;
             }
 

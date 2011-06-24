@@ -35,28 +35,36 @@ namespace AcrossTheRoom
 
         void DisplayBoardPage_Loaded(object sender, RoutedEventArgs e)
         {
-            switch (_message.AnimationType)
+            if (_message != null)
             {
-                case AnimationType.Swipe:
-                    {
-                        Swipe();
-                        return;
-                    }
-                case AnimationType.Flash:
-                    {
-                        Flash();
-                        return;
-                    }
-                case AnimationType.None:
-                    {
-                        DisplayStaticMessage();
-                        return;
-                    }
-                default:
-                    {
-                        RightToLeftMarquee();
-                        return;
-                    }
+                switch (_message.AnimationType)
+                {
+                    case AnimationType.SlideDown:
+                        {
+                            SlideDown();
+                            return;
+                        }
+                    case AnimationType.Flash:
+                        {
+                            Flash();
+                            return;
+                        }
+                    case AnimationType.None:
+                        {
+                            DisplayStaticMessage();
+                            return;
+                        }
+                    default:
+                        {
+                            RightToLeftMarquee();
+                            return;
+                        }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Message not found.");
+                NavigationService.Navigate(new Uri("/Mainpage.xaml", UriKind.Relative));
             }
         }
 
@@ -67,17 +75,19 @@ namespace AcrossTheRoom
             string id = "";
             if (NavigationContext.QueryString.TryGetValue("id", out id))
             {
-                Message msg = MessageData.Instance.Messages.FirstOrDefault(m => m.id == id);
+                System.Diagnostics.Debug.WriteLine("id: " + id.ToString());
+                Message msg = MessageData.Instance.Messages.FirstOrDefault(m => m.ID == id);
                 if (msg != null)
                 {
                     _message = msg;
                     this.DataContext = _message;
                 }
-                else
-                {
-                    MarqueeTextBlock.Text = "Message not found.";
-                }
             }
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
         }
 
         private void RightToLeftMarquee()
@@ -123,7 +133,7 @@ namespace AcrossTheRoom
             return 150 + (fontScale * FONT_SCALE_MULTIPLYER);
         }
 
-        private void Swipe()
+        private void SlideDown()
         {
             Storyboard storyBoard = new Storyboard();
 
@@ -293,7 +303,7 @@ namespace AcrossTheRoom
             tb.Text = text;
 
             int fontScale = (_message.FontScale == 0 ? 1 : _message.FontScale);
-            int fontSize =  50 + (fontScale * FONT_SCALE_MULTIPLYER);
+            int fontSize = 50 + (fontScale * FONT_SCALE_MULTIPLYER);
             tb.FontSize = fontSize;
 
             tb.Foreground = ColorHelper.GetBrushFromString(_message.ForegroundColor);

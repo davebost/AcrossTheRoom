@@ -15,11 +15,14 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using AcrossTheRoom.Models;
 using Microsoft.Advertising.Mobile.UI;
+using Microsoft.Phone.Marketplace;
 
 namespace AcrossTheRoom
 {
     public partial class App : Application
     {
+        private static bool isTrial = true;
+        private static bool checkedTrial = false;
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -84,32 +87,43 @@ namespace AcrossTheRoom
 
         }
 
+        public static bool IsTrial
+        {
+            get
+            {
+                if (!checkedTrial)
+                {
+                    LicenseInformation li = new LicenseInformation();
+                    isTrial = li.IsTrial();
+                    checkedTrial = true;
+                }
+                return isTrial;
+            }
+            private set { }
+        }
+
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Application_Launching");
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Application_Activated");
         }
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Application_Deactivated");
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Application_Closing");
         }
 
         // Code to execute if a navigation fails

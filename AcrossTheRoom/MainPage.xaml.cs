@@ -37,6 +37,15 @@ namespace AcrossTheRoom
             //adControl.Width = 480;
             //adControl.Height = 80;
 
+            if (!App.IsTrial)
+            {
+                adControl.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                adControl.Visibility = System.Windows.Visibility.Visible;
+            }
+            
             // Add Ad Control to MainPage Layout
             //Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
             //if (grid != null)

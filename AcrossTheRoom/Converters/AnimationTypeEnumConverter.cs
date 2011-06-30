@@ -19,9 +19,17 @@ namespace AcrossTheRoom
             {
                     string s = ((Enum)value).ToString();
                     if (s == "SlideDown")
+                    {
                         return "Slide Down";
+                    }
+                    else if (s == "SlideUp")
+                    {
+                        return "Slide Up";
+                    }
                     else
+                    {
                         return s;
+                    }
             }
 
             //Type type = value.GetType();            

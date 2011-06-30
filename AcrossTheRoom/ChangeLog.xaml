@@ -32,6 +32,19 @@
     </StackPanel.Resources>
 
     <TextBlock Style="{StaticResource PhoneTextLargeStyle}"
+               Text="What's New in 1.1" />
+
+    <ContentPresenter 
+        HorizontalAlignment="Stretch"
+        ContentTemplate="{StaticResource bullet}"
+        Content="Added new Slide Up animation." />
+    <ContentPresenter 
+        HorizontalAlignment="Stretch"
+        ContentTemplate="{StaticResource bullet}"
+        Content="Created a Free version of Across the Room." />
+
+
+    <TextBlock Style="{StaticResource PhoneTextLargeStyle}"
                Text="What's New in 1.0" />
     
     <ContentPresenter 

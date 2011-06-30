@@ -37,24 +37,28 @@ namespace AcrossTheRoom
             //adControl.Width = 480;
             //adControl.Height = 80;
 
+#if PAID
+
             if (!App.IsTrial)
             {
-                adControl.Visibility = System.Windows.Visibility.Collapsed;
+                // Remove Ads for paying customers
+                Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
+                if (grid != null)
+                {
+                    //    //grid.Children.Add(adControl);
+                    //    // Subscribe to this event if your application has multiple pages.
+                    //    // Single page applications do not need this code.
+                    //    this.Unloaded += new RoutedEventHandler(MainPage_Unloaded);
+                    LayoutRoot.Children.Remove(grid);
+                }
             }
             else
             {
                 adControl.Visibility = System.Windows.Visibility.Visible;
             }
-            
-            // Add Ad Control to MainPage Layout
-            //Grid grid = (Grid)this.LayoutRoot.FindName("AdControlPanel");
-            //if (grid != null)
-            //{
-            //    //grid.Children.Add(adControl);
-            //    // Subscribe to this event if your application has multiple pages.
-            //    // Single page applications do not need this code.
-            //    this.Unloaded += new RoutedEventHandler(MainPage_Unloaded);
-            //}
+#else
+            adControl.Visibility = System.Windows.Visibility.Visible;
+#endif
 
 
             // Load the message list

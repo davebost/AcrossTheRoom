@@ -8,10 +8,11 @@
 
     <!--Application Resources-->
     <Application.Resources>
-        <local:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
-        <local:AnimationTypeEnumConverter x:Key="AnimationTypeEnumConverter" />
-        <BitmapImage x:Key="IconUri" />
-        <ImageBrush x:Key="BackgroundUri" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

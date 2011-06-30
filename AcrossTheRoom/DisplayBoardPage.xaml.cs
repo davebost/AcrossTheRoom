@@ -44,6 +44,11 @@ namespace AcrossTheRoom
                             SlideDown();
                             return;
                         }
+                    case AnimationType.SlideUp:
+                        {
+                            SlideUp();
+                            return;
+                        }
                     case AnimationType.Flash:
                         {
                             Flash();
@@ -201,6 +206,92 @@ namespace AcrossTheRoom
                 edkf = new EasingDoubleKeyFrame();
                 edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + (seconds * 3)));
                 edkf.Value = 480;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                Storyboard.SetTarget(animation, b);
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(Canvas.Top)"));
+
+                storyBoard.Children.Add(animation);
+
+            }
+
+            if (storyBoard.Children.Count > 0)
+            {
+                storyBoard.RepeatBehavior = RepeatBehavior.Forever;
+                storyBoard.Begin();
+            }
+
+        }
+
+        private void SlideUp()
+        {
+            Storyboard storyBoard = new Storyboard();
+
+            MainCanvas.Children.Clear();
+            MainCanvas.Background = ColorHelper.GetBrushFromString(_message.BackgroundColor);
+
+            string text = _message.Text;
+
+            string[] words = text.Split(' ');
+            for (var i = 0; i <= words.Length - 1; i++)
+            {
+                Border b = new Border();
+                b.BorderThickness = new Thickness(0);
+                b.Width = 800;
+                b.Height = 480;
+
+                TextBlock tb = getTextBlock();
+                tb.Text = words[i];
+                tb.FontSize = getFontSize();
+                tb.Foreground = ColorHelper.GetBrushFromString(_message.ForegroundColor);
+                while (tb.ActualWidth > 800)
+                {
+                    tb.FontSize -= 1;
+                    System.Diagnostics.Debug.WriteLine("FontSize: " + tb.FontSize);
+                }
+                tb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                tb.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+
+                b.Child = tb;
+                b.SetValue(Canvas.TopProperty, Convert.ToDouble(480));
+
+                MainCanvas.Children.Add(b);
+
+                double seconds = ((MAX_SPEED - _message.Speed) + 1) * SPEED_INTERVAL;
+
+                double startingTime = (i * 2) * seconds;
+
+                EasingDoubleKeyFrame edkf;
+
+                // Hide elements during repeat
+
+                DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
+
+                CircleEase ce = new CircleEase();
+                ce.EasingMode = EasingMode.EaseOut;
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime));
+                edkf.Value = 480;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + seconds));
+                edkf.Value = 0;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + (seconds * 2)));
+                edkf.Value = 0;
+                edkf.EasingFunction = ce;
+                animation.KeyFrames.Add(edkf);
+
+                edkf = new EasingDoubleKeyFrame();
+                edkf.KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(startingTime + (seconds * 3)));
+                edkf.Value = -480;
                 edkf.EasingFunction = ce;
                 animation.KeyFrames.Add(edkf);
 

@@ -15,6 +15,7 @@ namespace AcrossTheRoom
     {
         Scrolling,
         SlideDown,
+        SlideUp,
         Flash,
         None
     }

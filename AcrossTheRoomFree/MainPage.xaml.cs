@@ -42,7 +42,6 @@ namespace AcrossTheRoom
                 if (grid != null)
                 {
                     LayoutRoot.Children.Remove(grid);
-                    LayoutRoot.RowDefinitions.RemoveAt(2);
                 }
             }
             else

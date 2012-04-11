@@ -1,0 +1,11 @@
+﻿<ResourceDictionary
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:local="clr-namespace:AcrossTheRoom">
+
+    <local:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
+    <local:AnimationTypeEnumConverter x:Key="AnimationTypeEnumConverter" />
+    <BitmapImage x:Key="IconUri" />
+    <ImageBrush x:Key="BackgroundUri" />
+
+</ResourceDictionary>

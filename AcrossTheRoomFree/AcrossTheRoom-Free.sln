@@ -1,22 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcrossTheRoom", "AcrossTheRoom\AcrossTheRoom.csproj", "{678B95E7-764D-4F0E-8CB9-0B330AE5E707}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcrossTheRoomFree", "AcrossTheRoomFree\AcrossTheRoomFree.csproj", "{E80324F8-200B-4C55-8CA2-84A5B798BC68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcrossTheRoom-Free", "AcrossTheRoom-Free.csproj", "{E80324F8-200B-4C55-8CA2-84A5B798BC68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		AcrossTheRoom - Debug|Any CPU = AcrossTheRoom - Debug|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{678B95E7-764D-4F0E-8CB9-0B330AE5E707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{678B95E7-764D-4F0E-8CB9-0B330AE5E707}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{678B95E7-764D-4F0E-8CB9-0B330AE5E707}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{678B95E7-764D-4F0E-8CB9-0B330AE5E707}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{678B95E7-764D-4F0E-8CB9-0B330AE5E707}.Release|Any CPU.Build.0 = Release|Any CPU
-		{678B95E7-764D-4F0E-8CB9-0B330AE5E707}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E80324F8-200B-4C55-8CA2-84A5B798BC68}.AcrossTheRoom - Debug|Any CPU.ActiveCfg = AcrossTheRoom - Debug|Any CPU
+		{E80324F8-200B-4C55-8CA2-84A5B798BC68}.AcrossTheRoom - Debug|Any CPU.Build.0 = AcrossTheRoom - Debug|Any CPU
+		{E80324F8-200B-4C55-8CA2-84A5B798BC68}.AcrossTheRoom - Debug|Any CPU.Deploy.0 = AcrossTheRoom - Debug|Any CPU
 		{E80324F8-200B-4C55-8CA2-84A5B798BC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E80324F8-200B-4C55-8CA2-84A5B798BC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E80324F8-200B-4C55-8CA2-84A5B798BC68}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

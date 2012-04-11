@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.0">
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
   <App xmlns="" ProductID="{650ee672-8134-4e91-acd6-fb599b407fc6}" Title="Across the Room" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Corgan Interactive" Description="Turn your phone into a billboard." Publisher="Corgan Interactive">
     <IconPath IsRelative="true" IsResource="false">AcrossTheRoom-Icon.png</IconPath>
     <Capabilities>

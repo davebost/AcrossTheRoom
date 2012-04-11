@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.0">
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
   <App xmlns="" ProductID="{815220c0-5cf5-4f45-ba7a-ba3911c58c65}" Title="Across The Room Free" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="AcrossTheRoomFree author" Description="Sample description" Publisher="AcrossTheRoomFree">
     <IconPath IsRelative="true" IsResource="false">AcrossTheRoom-Icon.png</IconPath>
     <Capabilities>
